@@ -24,6 +24,8 @@ First off, thank you for considering contributing to Solana Agent Kit! 🎉 Your
     - [Generating Documentation](#generating-documentation)
   - [Security](#security)
   - [License](#license)
+  - [Running Tests](#running-tests)
+    - [Integration Tests](#integration-tests)
 
 ## Code of Conduct
 
@@ -140,6 +142,30 @@ npm run docs
 ```
 
 The documentation will be available in the `docs/` directory.
+
+### Integration Tests
+
+The project includes integration tests for Solana interactions. To run the tests:
+
+1. Set up your environment variables:
+
+```bash
+# Create a .env file with:
+RPC_URL="https://api.devnet.solana.com"
+SOLANA_PRIVATE_KEY=your_test_wallet_private_key
+OPENAI_API_KEY=your_openai_api_key
+```
+
+2. Run the tests:
+```bash
+pnpm test:integration
+```
+
+The tests cover:
+- Balance checking
+- SOL transfers
+
+Note: Make sure your test wallet has some SOL in Devnet for the transfer tests.
 
 ## Security
 
