@@ -6,10 +6,10 @@ export class SolanaTransferTool extends Tool {
   name = "solana_transfer";
   description = `Transfer tokens or SOL to another address ( also called as wallet address ).
 
-  Inputs ( input is a JSON string ):
-  to: string, eg "8x2dR8Mpzuz2YqyZyZjUbYWKSWesBo5jMx2Q9Y86udVk" (required)
-  amount: number, eg 1 (required)
-  mint?: string, eg "So11111111111111111111111111111111111111112" or "SENDdRQtYMWaQrBroBrJ2Q53fgVuq95CV9UPGEvpCxa" (optional)`;
+  Input should be a JSON string with:
+  - to: string (required) - The recipient's wallet address
+  - amount: number (required) - The amount to transfer
+  - mint?: string (optional) - The token's mint address. If not provided, transfers SOL`;
 
   constructor(private solanaKit: SolanaAgentKit) {
     super();
@@ -18,6 +18,11 @@ export class SolanaTransferTool extends Tool {
   protected async _call(input: string): Promise<string> {
     try {
       const parsedInput = JSON.parse(input);
+
+      // Validate amount is positive
+      if (parsedInput.amount <= 0) {
+        throw new Error("Amount must be greater than 0");
+      }
 
       const recipient = new PublicKey(parsedInput.to);
       const mintAddress = parsedInput.mint
